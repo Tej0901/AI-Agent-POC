@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Student CRUD API
+  description: A simple API for managing student records.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: FastAPI server
+paths:
+  /students:
+    get:
+      summary: List all students
+      operationId: listStudents
+      responses:
+        '200':
+          description: A list of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+    post:
+      summary: Create a new student
+      operationId: createStudent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '200':
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+  /students/{id}:
+    get:
+      summary: Get a student by ID
+      operationId: getStudentById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Student details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          description: Student not found
+    put:
+      summary: Update a student by ID
+      operationId: updateStudent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '200':
+          description: Student updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          description: Student not found
+    delete:
+      summary: Delete a student by ID
+      operationId: deleteStudent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Student deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Student deleted successfully
+        '404':
+          description: Student not found
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the student
+        name:
+          type: string
+          description: Student's full name
+        age:
+          type: integer
+          description: Student's age
+      required:
+        - id
+        - name
+        - age
+    StudentInput:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Student's full name
+        age:
+          type: integer
+          description: Student's age
+      required:
+        - name
+        - age

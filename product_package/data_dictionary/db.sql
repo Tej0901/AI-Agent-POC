@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXISTS ai_chat_bot_db;
+USE ai_chat_bot_db;
+
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL
+);
